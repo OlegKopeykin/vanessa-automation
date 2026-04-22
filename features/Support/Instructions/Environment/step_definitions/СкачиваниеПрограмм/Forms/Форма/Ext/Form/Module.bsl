@@ -138,23 +138,14 @@
 КонецПроцедуры
 
 &НаКлиенте
-Функция ПолучитьСтрокуВызоваSikuli()
-	Возврат """C:\Program Files (x86)\Java\jre6\bin\java.exe"" -Xms64M -Xmx512M -Dfile.encoding=UTF-8 -Dpython.path=""C:\Program Files (x86)\Sikuli X\sikuli-script.jar/"" -jar ""C:\Program Files (x86)\Sikuli X\sikuli-ide.jar"" -r ";
-	//Возврат "java -Xms64M -Xmx512M -Dfile.encoding=UTF-8 -Dpython.path=""C:\Program Files (x86)\Sikuli X\sikuli-script.jar/"" -jar ""C:\Program Files (x86)\Sikuli X\sikuli-ide.jar"" -r ";
-КонецФункции	
-
-&НаКлиенте
 //Я нажал на кнопку Download на сайте sourcetree
 //@ЯНажалНаКнопкуDownloadНаСайтеSourcetree()
 Процедура ЯНажалНаКнопкуDownloadНаСайтеSourcetree() Экспорт
 	УдалитьСкаченныеФайлыПоМаске("SourceTreeSetup*.exe");
-	
-	Команда = ПолучитьСтрокуВызоваSikuli() + Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\SourceTree.sikuli";
-	Рез = Ванесса.ВыполнитьКомандуОСБезПоказаЧерногоОкна(Команда);
+
+	Рез = Ванесса.ВыполнитьSikuliСкрипт(Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\SourceTree.sikuli");
 	Ванесса.ПроверитьРавенство(Рез,0,"Был клик на кнопку большую синюю кнопку ""Скачать"".");
-	//КомандаСистемы(Команда + " > h:\temp\111.txt");
-	
-	
+
 	Ванесса.ЗапретитьВыполнениеШагов();
 	ПодключитьОбработчикОжидания("ТаймерОжидания",3);
 КонецПроцедуры
@@ -164,13 +155,10 @@
 //@ЯНажалНаКнопкуDownloadНаСайтеGit()
 Процедура ЯНажалНаКнопкуDownloadНаСайтеGit() Экспорт
 	УдалитьСкаченныеФайлыПоМаске("GIT*.exe");
-	
-	
-	//Команда = """C:\Program Files (x86)\Java\jre6\bin\java.exe"" -Xms64M -Xmx512M -Dfile.encoding=UTF-8 -Dpython.path=""C:\Program Files (x86)\Sikuli X\sikuli-script.jar/"" -jar ""C:\Program Files (x86)\Sikuli X\sikuli-ide.jar"" -r " + Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\Git.sikuli";
-	Команда = ПолучитьСтрокуВызоваSikuli() + Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\Git.sikuli";
-	Рез = Ванесса.ВыполнитьКомандуОСБезПоказаЧерногоОкна(Команда);
+
+	Рез = Ванесса.ВыполнитьSikuliСкрипт(Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\Git.sikuli");
 	Ванесса.ПроверитьРавенство(Рез,0,"Был клик на кнопку ""Скачать"".");
-	
+
 	Ванесса.ЗапретитьВыполнениеШагов();
 	ПодключитьОбработчикОжидания("ТаймерОжидания",3);
 КонецПроцедуры
@@ -179,11 +167,9 @@
 //Я нажимаю на кнопку Сохранить
 //@ЯНажимаюНаКнопкуСохранить()
 Процедура ЯНажимаюНаКнопкуСохранить() Экспорт
-	//Команда = """C:\Program Files (x86)\Java\jre6\bin\java.exe"" -Xms64M -Xmx512M -Dfile.encoding=UTF-8 -Dpython.path=""C:\Program Files (x86)\Sikuli X\sikuli-script.jar/"" -jar ""C:\Program Files (x86)\Sikuli X\sikuli-ide.jar"" -r " + Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\ClickSaveFF.sikuli";
-	Команда = ПолучитьСтрокуВызоваSikuli() + Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\ClickSaveFF.sikuli";
-	Рез = Ванесса.ВыполнитьКомандуОСБезПоказаЧерногоОкна(Команда);
+	Рез = Ванесса.ВыполнитьSikuliСкрипт(Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\ClickSaveFF.sikuli");
 	Ванесса.ПроверитьРавенство(Рез,0,"Был клик на кнопку ""Сохранить"" firefox.");
-	
+
 	Ванесса.ЗапретитьВыполнениеШагов();
 	ПодключитьОбработчикОжидания("ТаймерОжидания",2);
 КонецПроцедуры
@@ -194,12 +180,10 @@
 //@ЯНажимаюНаКнопкуDownloadPython3x()
 Процедура ЯНажимаюНаКнопкуDownloadPython3x() Экспорт
 	УдалитьСкаченныеФайлыПоМаске("python*.exe");
-	
-	//Команда = """C:\Program Files (x86)\Java\jre6\bin\java.exe"" -Xms64M -Xmx512M -Dfile.encoding=UTF-8 -Dpython.path=""C:\Program Files (x86)\Sikuli X\sikuli-script.jar/"" -jar ""C:\Program Files (x86)\Sikuli X\sikuli-ide.jar"" -r " + Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\Python.sikuli";
-	Команда = ПолучитьСтрокуВызоваSikuli() + Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\Python.sikuli";
-	Рез = Ванесса.ВыполнитьКомандуОСБезПоказаЧерногоОкна(Команда);
+
+	Рез = Ванесса.ВыполнитьSikuliСкрипт(Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\Python.sikuli");
 	Ванесса.ПроверитьРавенство(Рез,0,"Был клик на кнопку ""Скачать"".");
-	
+
 	Ванесса.ЗапретитьВыполнениеШагов();
 	ПодключитьОбработчикОжидания("ТаймерОжидания",3);
 КонецПроцедуры

@@ -82,16 +82,9 @@
 //Когда Я выполняю действия для загрузки feature-файла
 //@ЯВыполняюДействияДляЗагрузкиFeature_файла()
 Процедура ЯВыполняюДействияДляЗагрузкиFeature_файла() Экспорт
-	Команда = ПолучитьСтрокуВызоваSikuli() + Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\LoadingFeatureFileInBehavior.sikuli """ + Ванесса.Объект.КаталогИнструментов + "features\Support\Instructions\Core\Demo.feature""";
-	
-	Результат = Ванесса.ВыполнитьКомандуОСБезПоказаЧерногоОкна(Команда);
-	
+	Результат = Ванесса.ВыполнитьSikuliСкрипт(Ванесса.Объект.КаталогИнструментов + "\tools\Sikuli\LoadingFeatureFileInBehavior.sikuli """ + Ванесса.Объект.КаталогИнструментов + "features\Support\Instructions\Core\Demo.feature""");
+
 	Ванесса.ПроверитьРавенство(Результат, 0 , "");
 КонецПроцедуры
-
-&НаКлиенте
-Функция ПолучитьСтрокуВызоваSikuli()
-	Возврат """C:\Program Files (x86)\Java\jre6\bin\java.exe"" -Xms64M -Xmx512M -Dfile.encoding=UTF-8 -Dpython.path=""C:\Program Files (x86)\Sikuli Xi\sikuli-script.jar/"" -jar ""C:\Program Files (x86)\Sikuli X\sikuli-ide.jar"" -r ";
-КонецФункции	
 
 //окончание текста модуля
