@@ -1,0 +1,12 @@
+{
+   "_comment": "Preset: Web check на 8.3.27. Эквивалент tools/JSON/WebCheck_8327.json. Запускает один build в режиме веб-клиента.",
+   "КаталогиДляОчистки":[
+      ".\\ServiceBases\\allurereport",
+      ".\\ServiceBases\\cucumber",
+      ".\\ServiceBases\\junitreport"
+   ],
+   "ЗапускатьWatcher": true,
+   "ВариантыСборок":[
+      ".\\checks\\builds\\8.3.27\\web.json"
+   ]
+}

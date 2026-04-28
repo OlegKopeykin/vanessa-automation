@@ -1,0 +1,11 @@
+{
+   "_comment": "Preset: SMOKE check для pre-commit feedback. ПРИМЕР архитектуры для smoke-набора (20-30 critical-path сценариев, ~5 минут). Использует whitelist через build с СписокТеговОтбор:[SmokeFast]. Тег @SmokeFast нужно проставить на 20-30 .feature вручную (см. presets/smoke/README.md).",
+   "КаталогиДляОчистки":[
+      ".\\ServiceBases\\allurereport",
+      ".\\ServiceBases\\cucumber",
+      ".\\ServiceBases\\junitreport"
+   ],
+   "ВариантыСборок":[
+      ".\\checks\\builds\\8.3.27\\uf-smoke.json"
+   ]
+}

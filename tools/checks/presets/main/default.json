@@ -1,0 +1,24 @@
+{
+   "_comment": "Preset: полный matrix. Эквивалент tools/JSON/Main.json. Используется в '2 CheckBehavior.cmd' для финального прогона перед релизом. 12 сборок: full coverage всех версий + compat. Запуск часами — НЕ для частого использования.",
+   "КаталогиДляОчистки":[
+      ".\\ServiceBases\\allurereport",
+      ".\\ServiceBases\\cucumber",
+      ".\\ServiceBases\\junitreport"
+   ],
+   "ЗапускатьWatcher": true,
+   "_NOTE": "Файлы из старого tools/JSON/Main.json. Многие builds в этом пресете пока не созданы в новой структуре tools/checks/builds/ — это пример для обсуждения. Для реальной миграции нужно создать остальные builds (VBParams8321UF, VBParams8322UF, VBParams8323UF, etc.)",
+   "ВариантыСборок":[
+      ".\\checks\\builds\\8.3.24\\uf-installcomponent.json",
+      ".\\JSON\\VBParams8321UFnoSync.json",
+      ".\\JSON\\VBParams8317UF_Sovm_82.json",
+      ".\\JSON\\VBParams82OF.json",
+      ".\\JSON\\VBParams82UF.json",
+      ".\\JSON\\VBParams836OF.json",
+      ".\\JSON\\VBParams8321UF.json",
+      ".\\JSON\\VBParams8322UF.json",
+      ".\\JSON\\VBParams8323UF.json",
+      ".\\JSON\\VBParams8324UF.json",
+      ".\\checks\\builds\\8.3.27\\uf.json",
+      ".\\checks\\builds\\8.3.27\\web.json"
+   ]
+}

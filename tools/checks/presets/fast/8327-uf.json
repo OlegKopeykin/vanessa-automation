@@ -1,0 +1,11 @@
+{
+   "_comment": "Preset: быстрая проверка на 8.3.27 UF (1 сборка). Эквивалент tools/JSON/FastCheck_8327.json.",
+   "КаталогиДляОчистки":[
+      ".\\ServiceBases\\allurereport",
+      ".\\ServiceBases\\cucumber",
+      ".\\ServiceBases\\junitreport"
+   ],
+   "ВариантыСборок":[
+      ".\\checks\\builds\\8.3.27\\uf-fastcheck.json"
+   ]
+}
