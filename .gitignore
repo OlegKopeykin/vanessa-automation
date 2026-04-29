@@ -67,3 +67,8 @@ VanessaAutomationsingle/Templates/КлючевыеСловаGherkin/Ext/Template
 HelpTTS/
 lib/CF/83/ConfigDumpInfo.xml
 VAEditorCacheFiles/
+
+# bench artefacts (VA-StreamingReports)
+tools/bench/bench-results.csv
+tools/ServiceBases/bench-allure-*
+tools/ServiceBases/BenchMessages.txt
