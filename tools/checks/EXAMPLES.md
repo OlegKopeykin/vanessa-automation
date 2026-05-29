@@ -15,7 +15,7 @@
 | Подготовка окружения | `oscript tools/checks/prepare.os` | `tools\1 PrepareCheck.cmd` |
 | Просмотр Allure-отчёта | `oscript tools/checks/view-allure.os` | `tools\3 ViewAllureReport.cmd` |
 
-> ⚠️ Целевые команды через `check.os` пока не работают (роутер — stub). Используйте «через старый runner» — функционально идентично.
+> ⚠️ Роутер `check.os` реализован, но ещё не валидирован на машине с 1С. Без 1С проверяемы `check.os --list` и `check.os --dry-run <preset>`. Если поведенческий прогон через `check.os` не пошёл — используйте колонку «через старый runner» (функционально идентично).
 
 ## Сценарий 1: Pre-commit smoke (рекомендуемый workflow)
 

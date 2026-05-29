@@ -134,13 +134,14 @@ tools/checks/
 - `presets/main/default.json` (12 builds — пока 2 в новой структуре, остальные старые)
 - `presets/main/no-web.json` (10 builds — аналогично)
 
-**Stub'ы** (для дизайна, не работают):
-- `check.os`, `prepare.os`, `view-allure.os` — OneScript-роутеры
-- `platform/linux/*.sh` — Linux-обёртки
+**Реализованы, требуют валидации на winpc** (поведенческий прогон возможен только на машине с 1С):
+- `check.os` — роутер: `--list`, `--dry-run`, валидация `ВариантыСборок`, детект ОС, делегирование обёртке. `--list`/`--dry-run` тестируются без 1С.
+- `prepare.os`, `view-allure.os` — роутеры (детект ОС → платформенная обёртка)
+- `platform/linux/check.sh`, `prepare.sh`, `view-allure.sh` — Linux-обёртки (валидировать на Linux+1С)
 
 **Рабочие**:
-- `platform/windows/check.cmd` — рабочая ОС-обёртка
-- `platform/windows/prepare.cmd`, `view-allure.cmd` — заготовки
+- `platform/windows/check.cmd` — ОС-обёртка (CWD runner'а = `tools/`)
+- `platform/windows/prepare.cmd`, `view-allure.cmd` — повторяют логику старых `1 PrepareCheck.cmd` / `3 ViewAllureReport.cmd`
 
 ## Важно
 
@@ -161,7 +162,7 @@ tools/checks/
 ## FAQ
 
 **Q: Я могу прямо сейчас запустить `oscript tools/checks/check.os fast/8327-uf`?**
-A: Нет — `check.os` пока stub. Используйте старый `tools\FastCheck_8327_UF.cmd` или прямой вызов через `oscript .\tools\onescript\run-behavior-check-session.os .\tools\checks\presets\fast\8327-uf.json` — функционально идентично.
+A: Роутер `check.os` реализован, но требует валидации на машине с 1С (winpc). Без 1С уже можно проверить `oscript tools\checks\check.os --list` и `oscript tools\checks\check.os --dry-run fast/8327-uf`. Гарантированно рабочий путь — старый `tools\FastCheck_8327_UF.cmd` или прямой вызов `cd tools && oscript .\onescript\run-behavior-check-session.os .\checks\presets\fast\8327-uf.json` (функционально идентично).
 
 **Q: Если я хочу попробовать новый пресет?**
 A: Запустите его через существующий runner — все JSON в `presets/` и `builds/` совместимы:

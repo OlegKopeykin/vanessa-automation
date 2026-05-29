@@ -24,15 +24,20 @@ if not exist "%~1" (
     exit /b 1
 )
 
-:: 3. Сохраняем путь, переходим в корень репо
+:: 3. Сохраняем путь. REPO_ROOT — для compile.bat, TOOLS_DIR — рабочий каталог runner'а.
+::    КРИТИЧНО: runner ОБЯЗАН стартовать с CWD = tools/, иначе сломаются и
+::    относительные ссылки ВариантыСборок (.\checks\builds\...), и вычисление
+::    workspaceRoot из "./../vanessa-automation.epf". Поэтому: compile в корне,
+::    затем cd в tools/, затем запуск runner'а (как делали старые tools\*.cmd).
 set "PRESET=%~1"
 set "REPO_ROOT=%~dp0..\..\..\.."
+set "TOOLS_DIR=%~dp0..\..\.."
+
+:: 4. Сборка .cf — call compile.bat в корне репо (как в старых .cmd)
 cd /d "%REPO_ROOT%" || (
     echo [ERROR] Не удалось перейти в корень репо: %REPO_ROOT%
     exit /b 2
 )
-
-:: 4. Сборка .cf — call compile.bat (как в старых .cmd)
 echo [INFO] Запуск compile.bat в %CD%
 call compile.bat
 if errorlevel 1 (
@@ -40,7 +45,11 @@ if errorlevel 1 (
     exit /b %ERRORLEVEL%
 )
 
-:: 5. Передаём управление существующему OneScript-runner'у
-echo [INFO] Запуск run-behavior-check-session.os с пресетом %PRESET%
-oscript .\tools\onescript\run-behavior-check-session.os "%PRESET%"
+:: 5. Переходим в tools/ и передаём управление существующему OneScript-runner'у
+cd /d "%TOOLS_DIR%" || (
+    echo [ERROR] Не удалось перейти в tools: %TOOLS_DIR%
+    exit /b 2
+)
+echo [INFO] Запуск run-behavior-check-session.os с пресетом %PRESET% (CWD=%CD%)
+oscript .\onescript\run-behavior-check-session.os "%PRESET%"
 exit /b %ERRORLEVEL%

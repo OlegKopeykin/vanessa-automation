@@ -26,15 +26,17 @@ fi
 PRESET="$1"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../../../.." && pwd)"
+TOOLS_DIR="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 
+# Сборка (если есть compile.sh) — в корне репо
 cd "$REPO_ROOT"
-
-# Сборка (если есть compile.sh)
 if [ -f compile.sh ]; then
     echo "[INFO] Запуск compile.sh"
     sh compile.sh
 fi
 
-# Передать управление существующему OneScript-runner'у
-echo "[INFO] Запуск run-behavior-check-session.os с пресетом $PRESET"
-oscript ./tools/onescript/run-behavior-check-session.os "$PRESET"
+# КРИТИЧНО: runner стартует с CWD = tools/, иначе сломаются относительные
+# ссылки ВариантыСборок (./checks/builds/...) и вычисление workspaceRoot.
+cd "$TOOLS_DIR"
+echo "[INFO] Запуск run-behavior-check-session.os с пресетом $PRESET (CWD=$PWD)"
+oscript ./onescript/run-behavior-check-session.os "$PRESET"
