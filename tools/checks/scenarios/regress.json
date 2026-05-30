@@ -1,5 +1,12 @@
 {
-   "_description": "Regress (бывший MiddleCheck): полный набор тестов, с retry=3. Основной прогон для CI.",
+   "_description": "Regress: полный набор тестов, retry=3. На UF-флейворах прогон разбивается на part1/part2 по тегам @uf-part1/@uf-part2 (две последовательные сборки).",
    "selectTags": [],
-   "baseExclude": ["IgnoreOnCIMainBuild", "Ignore"]
+   "baseExclude": ["IgnoreOnCIMainBuild", "Ignore"],
+   "split": {
+      "flavors": ["uf", "uf-nosync"],
+      "parts": [
+         { "suffix": "part1", "exclude": ["uf-part2"] },
+         { "suffix": "part2", "exclude": ["uf-part1"] }
+      ]
+   }
 }

@@ -16,7 +16,7 @@ oscript tools/checks/check.os --scenario fast --platform 8.3.27 --flavor uf --no
 ## Regress (полный набор, retry=3)
 
 ```bash
-# Одна платформа, один флейвор
+# Одна платформа, один флейвор (на UF → part1/part2, две сборки в одном прогоне)
 oscript tools/checks/check.os --scenario regress --platform 8.3.27 --flavor uf
 
 # Две платформы — последовательно
