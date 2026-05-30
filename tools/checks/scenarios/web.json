@@ -1,0 +1,8 @@
+{
+   "_description": "Web-прогон: тесты для веб-клиента. Требует флейвор web.",
+   "selectTags": [],
+   "baseExclude": ["IgnoreOnCIMainBuild", "Ignore"],
+   "combos": [
+      { "platform": "8.3.27", "flavor": "web" }
+   ]
+}

@@ -1,0 +1,16 @@
+{
+   "_description": "Режим совместимости 8.2, обычные формы (ОФ). Платформа 8.3.6 x86, 32-bit толстый клиент 1cv8.exe (ЗапускатьТолстыйКлиент). База в v82ServiceBase82 с /RunModeOrdinaryApplication.",
+   "ВерсияПлатформы": "8.3.6",
+   "КаталогПоискаВерсииПлатформы": "C:\\Program Files (x86)\\1cv8",
+   "СтрокаПодключенияКБазе": "ENTERPRISE /F.\\ServiceBases\\v82ServiceBase82 /RunModeOrdinaryApplication",
+   "ЗапускатьТолстыйКлиент": "Истина",
+   "ВыводитьСообщенияВФайл": ".\\ServiceBases\\Messages 8.2 OF.txt",
+   "ИмяФайлаЛогВыполненияСценариев": "./tools/ServiceBases/log836_sovm_82_of.txt",
+   "КаталогФич": ".\\..\\features",
+   "КаталогОтносительноКоторогоНадоСтроитьИерархию": ".\\..\\features",
+   "ПутьКVanessaAutomation": ".\\..\\vanessa-automation.epf",
+   "КаталогOutputAllureБазовый": ".\\ServiceBases\\allurereport",
+   "КаталогOutputjUnit": ".\\ServiceBases\\junitreport",
+   "ПутьКФайлуДляВыгрузкиСтатусаВыполненияСценариев": ".\\ServiceBases\\BuildStatus.log",
+   "platformExcludeTags": ["IgnoreOn82Builds"]
+}

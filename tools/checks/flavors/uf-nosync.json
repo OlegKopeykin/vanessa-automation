@@ -1,0 +1,5 @@
+{
+   "_description": "Composite-флейвор: управляемые формы + асинхронный режим. Объединяет uf и nosync: исключает теги обоих флейворов.",
+   "ВыполнятьШагиАсинхронно": "Истина",
+   "flavorExcludeTags": ["IgnoreOnUFBuilds", "IgnoreOnNoSync"]
+}

@@ -1,9 +1,0 @@
-{
-   "_comment": "Preset: проверка документации. Эквивалент tools/JSON/CheckDoc.json. Запускает один build на 8.3.6 с whitelist по тегу @DocumentationBuild.",
-   "КаталогиДляОчистки":[
-      ".\\ServiceBases\\allurereport"
-   ],
-   "ВариантыСборок":[
-      ".\\checks\\builds\\8.3.6\\uf-checkdoc.json"
-   ]
-}

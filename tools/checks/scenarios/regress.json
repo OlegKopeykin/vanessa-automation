@@ -1,0 +1,5 @@
+{
+   "_description": "Regress (бывший MiddleCheck): полный набор тестов, с retry=3. Основной прогон для CI.",
+   "selectTags": [],
+   "baseExclude": ["IgnoreOnCIMainBuild", "Ignore"]
+}

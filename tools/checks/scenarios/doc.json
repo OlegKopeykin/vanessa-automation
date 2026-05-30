@@ -1,0 +1,11 @@
+{
+   "_description": "Проверка документации: только @DocumentationBuild сценарии на платформе 8.3.6.",
+   "selectTags": ["DocumentationBuild"],
+   "baseExclude": [],
+   "_overrides": {
+      "КаталогФич": "./features"
+   },
+   "combos": [
+      { "platform": "8.3.6", "flavor": "uf" }
+   ]
+}

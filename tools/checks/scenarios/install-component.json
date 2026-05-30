@@ -1,0 +1,8 @@
+{
+   "_description": "Тестирование нативной компоненты VanessaExt: только @InstallComponent сценарии. КаталогФич сужен до features/Core.",
+   "selectTags": ["InstallComponent"],
+   "baseExclude": [],
+   "_overrides": {
+      "КаталогФич": "./features/Core"
+   }
+}

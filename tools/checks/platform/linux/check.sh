@@ -1,9 +1,8 @@
 #!/bin/sh
 # Linux ОС-обёртка для запуска проверки.
-# Контракт: check.sh <effective-preset.json>
-#
-# STATUS: концептуальный stub. Тестировать на реальной Linux-машине с 1С перед использованием.
-# Реализация по образцу tools/linux/runtest.sh.
+# Контракт: check.sh <top-level.json>
+#   <top-level.json> — абсолютный путь к top-level JSON (сгенерирован резолвером check.os).
+# Дёргается из tools/checks/check.os. Реализация по образцу tools/linux/runtest.sh.
 
 set -e
 
@@ -13,13 +12,13 @@ export LANG=ru_RU.UTF-8 2>/dev/null || true
 
 # Проверка аргумента
 if [ -z "$1" ]; then
-    echo "[ERROR] Не передан путь к preset JSON."
-    echo "Usage: check.sh <absolute-path-to-preset.json>"
+    echo "[ERROR] Не передан путь к top-level JSON."
+    echo "Usage: check.sh <absolute-path-to-top-level.json>"
     exit 1
 fi
 
 if [ ! -f "$1" ]; then
-    echo "[ERROR] Preset не найден: $1"
+    echo "[ERROR] top-level JSON не найден: $1"
     exit 1
 fi
 
@@ -36,7 +35,7 @@ if [ -f compile.sh ]; then
 fi
 
 # КРИТИЧНО: runner стартует с CWD = tools/, иначе сломаются относительные
-# ссылки ВариантыСборок (./checks/builds/...) и вычисление workspaceRoot.
+# пути в дескрипторах ("./../vanessa-automation.epf" и т.п.).
 cd "$TOOLS_DIR"
-echo "[INFO] Запуск run-behavior-check-session.os с пресетом $PRESET (CWD=$PWD)"
+echo "[INFO] Запуск run-behavior-check-session.os с top-level $PRESET (CWD=$PWD)"
 oscript ./onescript/run-behavior-check-session.os "$PRESET"

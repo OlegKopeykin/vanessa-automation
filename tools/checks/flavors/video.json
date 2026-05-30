@@ -1,0 +1,14 @@
+{
+   "_description": "Запись видео прогонов (opt-in). Объединяется с другими флейворами через composite или добавляется отдельно. Требует ffmpeg, magick convert, IrfanView.",
+   "ВыполнятьШагиАсинхронно": "Ложь",
+   "ЗаписьВидеоКаталогДляВременныхФайлов": "./tools/VideoTemp",
+   "ЗаписьВидеоФайлКурсораМышки": "./tools/VideoTools/mouse.png",
+   "ЗаписьВидеоФайлВодянойЗнак": "./tools/VideoTools/logo.png",
+   "ЗаписьВидеоКомандаFfmpeg": "ffmpeg",
+   "ЗаписьВидеоКомандаConvert": "magick convert",
+   "ЗаписьВидеоСловарьЗамен": "./tools/VideoTools/libtts.txt",
+   "ЗаписьВидеоСловарьЗаменСписок": [
+      "./tools/VideoTools/libtts.txt"
+   ],
+   "flavorExcludeTags": []
+}

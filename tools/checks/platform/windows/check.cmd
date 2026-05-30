@@ -1,11 +1,8 @@
 @echo off
 :: Windows ОС-обёртка для запуска проверки.
-:: Контракт: check.cmd <effective-preset.json>
-::   <effective-preset.json> — абсолютный путь к разрезолвенному пресет-JSON
-:: Дёргается из universal router'а tools/checks/check.os, который
-:: определяет ОС и подбирает правильный platform/<ОС>/check.cmd|sh
-::
-:: STATUS: рабочий пример, требует тестирования на Windows с установленной 1С.
+:: Контракт: check.cmd <top-level.json>
+::   <top-level.json> — абсолютный путь к top-level JSON (сгенерирован резолвером check.os).
+:: Дёргается из tools/checks/check.os, который определяет ОС и подбирает обёртку.
 
 setlocal
 
@@ -14,21 +11,20 @@ chcp 65001 > nul
 
 :: 2. Проверяем что аргумент передан
 if "%~1"=="" (
-    echo [ERROR] Не передан путь к preset JSON.
-    echo Usage: check.cmd ^<absolute-path-to-preset.json^>
+    echo [ERROR] Не передан путь к top-level JSON.
+    echo Usage: check.cmd ^<absolute-path-to-top-level.json^>
     exit /b 1
 )
 
 if not exist "%~1" (
-    echo [ERROR] Preset не найден: %~1
+    echo [ERROR] top-level JSON не найден: %~1
     exit /b 1
 )
 
 :: 3. Сохраняем путь. REPO_ROOT — для compile.bat, TOOLS_DIR — рабочий каталог runner'а.
-::    КРИТИЧНО: runner ОБЯЗАН стартовать с CWD = tools/, иначе сломаются и
-::    относительные ссылки ВариантыСборок (.\checks\builds\...), и вычисление
-::    workspaceRoot из "./../vanessa-automation.epf". Поэтому: compile в корне,
-::    затем cd в tools/, затем запуск runner'а (как делали старые tools\*.cmd).
+::    КРИТИЧНО: runner ОБЯЗАН стартовать с CWD = tools/, иначе сломаются относительные
+::    пути в дескрипторах ("./../vanessa-automation.epf" и т.п.).
+::    Поэтому: compile в корне, затем cd в tools/, затем запуск runner'а.
 set "PRESET=%~1"
 set "REPO_ROOT=%~dp0..\..\..\.."
 set "TOOLS_DIR=%~dp0..\..\.."
@@ -50,6 +46,6 @@ cd /d "%TOOLS_DIR%" || (
     echo [ERROR] Не удалось перейти в tools: %TOOLS_DIR%
     exit /b 2
 )
-echo [INFO] Запуск run-behavior-check-session.os с пресетом %PRESET% (CWD=%CD%)
+echo [INFO] Запуск run-behavior-check-session.os с top-level %PRESET% (CWD=%CD%)
 oscript .\onescript\run-behavior-check-session.os "%PRESET%"
 exit /b %ERRORLEVEL%

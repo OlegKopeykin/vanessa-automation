@@ -1,0 +1,10 @@
+{
+   "_description": "FastCheck: полный набор тестов кроме @IgnoreOnFastCheck и @Video. 1 попытка (без retry). Быстрая CI-проверка перед merge.",
+   "selectTags": [],
+   "baseExclude": ["IgnoreOnCIMainBuild", "IgnoreOnFastCheck", "Ignore", "Video"],
+   "_overrides": {
+      "КоличествоПопытокВыполненияСценария": "1",
+      "ВыводитьВЛогВыполнениеШагов": "Истина",
+      "ВыполнятьШагиАсинхронно": "Ложь"
+   }
+}

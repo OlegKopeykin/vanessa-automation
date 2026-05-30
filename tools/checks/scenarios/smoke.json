@@ -1,0 +1,5 @@
+{
+   "_description": "Smoke-проверка: ~20-30 критических сценариев, ~5 минут. Whitelist по тегу @SmokeFast.",
+   "selectTags": ["SmokeFast"],
+   "baseExclude": ["Ignore", "Video"]
+}
