@@ -1097,6 +1097,12 @@ A structure that will contain key and value pairs. This structure will be loaded
    * **replacetabswithspaces**:
       The option determines whether tabs should be replaced with spaces in the editor.
 
+   * **normalizeindentationonsave**:
+      When saving a file in the editor, leading indentation of all lines is normalized: to spaces if the "replacetabswithspaces" option is enabled, otherwise to tabs.
+
+   * **tabsize**:
+      The number of spaces that equals one tab character in the editor. Default is 4.
+
    * **showbookmarkstop**:
       If the option is set, then bookmarks will be displayed at the top. This is to give the script editor more room to display the script.
 

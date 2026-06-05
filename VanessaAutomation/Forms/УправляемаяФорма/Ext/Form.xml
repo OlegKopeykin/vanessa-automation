@@ -35766,6 +35766,58 @@ För att inaktivera musrörelse vid ett specifikt steg, använd direktivet #[DoN
 																		<Event name="OnChange">ЗаменятьТабыНаПробелыПриИзменении</Event>
 																	</Events>
 																</CheckBoxField>
+																<CheckBoxField name="ПриводитьОтступыПриСохранении" id="4145">
+																	<DataPath>Объект.ПриводитьОтступыПриСохранении</DataPath>
+																	<TitleLocation>Right</TitleLocation>
+																	<ToolTipRepresentation>ShowBottom</ToolTipRepresentation>
+																	<CheckBoxType>Auto</CheckBoxType>
+																	<ContextMenu name="ПриводитьОтступыПриСохраненииКонтекстноеМеню" id="4146"/>
+																	<ExtendedTooltip name="ПриводитьОтступыПриСохраненииРасширеннаяПодсказка" id="4147">
+																		<AutoMaxWidth>false</AutoMaxWidth>
+																		<Title formatted="false">
+																			<v8:item>
+																				<v8:lang>en</v8:lang>
+																				<v8:content>When saving a file in the editor, leading indentation of all lines is normalized: to spaces if the "Replace tabs with spaces" option is enabled, otherwise to tabs.</v8:content>
+																			</v8:item>
+																			<v8:item>
+																				<v8:lang>ru</v8:lang>
+																				<v8:content>При сохранении файла в редакторе отступы в начале всех строк приводятся к одному виду: к пробелам, если включена опция "Заменять табы на пробелы", иначе к табуляции.</v8:content>
+																			</v8:item>
+																			<v8:item>
+																				<v8:lang>sv</v8:lang>
+																				<v8:content>När en fil sparas i redigeraren normaliseras inledande indrag på alla rader: till mellanslag om alternativet "Ersätt tabbar med mellanslag" är aktiverat, annars till tabbar.</v8:content>
+																			</v8:item>
+																		</Title>
+																	</ExtendedTooltip>
+																</CheckBoxField>
+																<InputField name="РазмерТабуляции" id="4148">
+																	<DataPath>Объект.РазмерТабуляции</DataPath>
+																	<TitleLocation>Left</TitleLocation>
+																	<ToolTipRepresentation>ShowBottom</ToolTipRepresentation>
+																	<Width>3</Width>
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<ContextMenu name="РазмерТабуляцииКонтекстноеМеню" id="4149"/>
+																	<ExtendedTooltip name="РазмерТабуляцииРасширеннаяПодсказка" id="4150">
+																		<AutoMaxWidth>false</AutoMaxWidth>
+																		<Title formatted="false">
+																			<v8:item>
+																				<v8:lang>en</v8:lang>
+																				<v8:content>The number of spaces that equals one tab character in the editor.</v8:content>
+																			</v8:item>
+																			<v8:item>
+																				<v8:lang>ru</v8:lang>
+																				<v8:content>Количество пробелов, соответствующее одному символу табуляции в редакторе.</v8:content>
+																			</v8:item>
+																			<v8:item>
+																				<v8:lang>sv</v8:lang>
+																				<v8:content>Antalet mellanslag som motsvarar ett tabbtecken i redigeraren.</v8:content>
+																			</v8:item>
+																		</Title>
+																	</ExtendedTooltip>
+																	<Events>
+																		<Event name="OnChange">РазмерТабуляцииПриИзменении</Event>
+																	</Events>
+																</InputField>
 															</ChildItems>
 														</UsualGroup>
 													</ChildItems>
