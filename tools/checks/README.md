@@ -2,6 +2,8 @@
 
 `check.os` собирает конфигурацию прогона из дескрипторов (defaults / platforms / flavors / scenarios) и запускает существующий runner `run-behavior-check-session.os` через платформенную обёртку.
 
+> Доп. документы: [EXAMPLES.md](EXAMPLES.md) — примеры команд · [COMPARISON.md](COMPARISON.md) — сравнение с текущим путём (`tools/*.cmd` + `tools/JSON/`) · [ci/](ci/) — запуск в Jenkins (Jenkinsfile + инструкция).
+
 ## Структура каталога
 
 ```

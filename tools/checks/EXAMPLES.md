@@ -29,8 +29,32 @@ oscript tools/checks/check.os --scenario regress --platform 8.3.27,8.5.1 --flavo
 ## Конкретная фича
 
 ```bash
-oscript tools/checks/check.os --feature features/Core/component.feature --platform 8.3.27 --flavor uf
+# ВАЖНО: путь фичи — с префиксом ./ (иначе VA не найдёт фичу → 0 сценариев → BuildStatus=3)
+oscript tools/checks/check.os --feature ./features/Core/component.feature --platform 8.3.27 --flavor uf
 ```
+
+## Несколько конкретных фич
+
+```bash
+# Каждая фича — отдельный --feature (запятая НЕ разбивается), каждая с ./
+oscript tools/checks/check.os --scenario fast --platform 8.3.27 --flavor uf \
+  --feature ./features/Core/ExecuteCode/ExecuteCode.feature \
+  --feature ./features/Core/OpenForm/ОткрытиеФормы.feature \
+  --feature ./features/Core/TestClient/ЗакрытиеОкна.feature --no-watcher
+```
+
+## CI-режим: резолв и запуск раздельно (--out)
+
+```bash
+# 1) собрать top-level VBParams без запуска 1С
+oscript tools/checks/check.os --scenario fast --platform 8.3.27 --flavor uf \
+  --feature ./features/Core/ExecuteCode/ExecuteCode.feature --no-watcher --out ./toplevel.json
+
+# 2) запустить раннер напрямую (CWD = tools/) — stdout виден в CI, exit-код = статус
+cd tools && oscript ./onescript/run-behavior-check-session.os ../toplevel.json
+```
+
+Готовый Jenkins-pipeline на этой схеме: [`ci/Jenkinsfile`](ci/Jenkinsfile), инструкция: [`ci/README.md`](ci/README.md).
 
 ## По тегу (ad-hoc)
 

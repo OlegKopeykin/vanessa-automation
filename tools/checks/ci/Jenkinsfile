@@ -1,0 +1,110 @@
+// Jenkinsfile — прогон Vanessa Automation через резолвер tools/checks/check.os
+//
+// Pipeline-as-code, отражающий рабочую цепочку (проверено на Windows-агенте с 1С 8.3.27).
+// Параметризован и не содержит секретов — настройте параметры/credentials под своё окружение.
+// Подробности и troubleshooting: tools/checks/ci/README.md
+//
+// Требования к агенту (label 'gui'): интерактивная GUI-сессия (1С рисует окна),
+// 1С:Предприятие нужной версии, OneScript (oscript) в PATH, git, доступ к github.com (Compile).
+
+pipeline {
+    agent { label params.AGENT_LABEL }
+
+    parameters {
+        string(name: 'AGENT_LABEL',  defaultValue: 'gui',      description: 'Метка агента (GUI-сессия для 1С)')
+        string(name: 'BRANCH',       defaultValue: 'feature/tools-checks-preview', description: 'Ветка репозитория')
+        string(name: 'REPO_URL',     defaultValue: '',         description: 'URL git-репозитория vanessa-automation')
+        credentials(name: 'GIT_CRED', defaultValue: '',        description: 'Jenkins credentials для git (если приватный)', required: false)
+        string(name: 'SCENARIO',     defaultValue: 'fast',     description: 'Сценарий check.os (fast/smoke/regress/…)')
+        string(name: 'PLATFORM',     defaultValue: '8.3.27',   description: 'Версия платформы 1С')
+        string(name: 'FLAVOR',       defaultValue: 'uf',       description: 'Флейвор (uf/of/web/nosync/…)')
+        // Фичи — по одной на строку, КАЖДАЯ с префиксом ./ (иначе VA не найдёт фичу → 0 сценариев).
+        text(name: 'FEATURES',       defaultValue: './features/Core/ExecuteCode/ExecuteCode.feature',
+             description: 'Список фич (по строке на фичу, с префиксом ./). Пусто = весь сценарий.')
+        // Локализация дескриптора: если 1С НЕ в C:\\Program Files\\1cv8 — укажите фактический корень.
+        string(name: 'PLATFORM_SEARCH_PATH', defaultValue: '', description: 'Корень установки 1С, если не C:\\Program Files\\1cv8 (напр. D:\\1cv8)')
+    }
+
+    options {
+        timestamps()
+        timeout(time: 2, unit: 'HOURS')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // git-плагин не всегда берёт self-signed (schannel) — checkout явным git'ом.
+                    // credential.helper= отключает Git Credential Manager (виснет в сессии агента).
+                    def creds = params.GIT_CRED ? "-c credential.helper=" : "-c credential.helper="
+                    bat """chcp 65001 >nul
+set GIT_TERMINAL_PROMPT=0
+if not exist .git git init . || exit /b 1
+git remote remove origin 2>nul
+git remote add origin "${params.REPO_URL}" || exit /b 1
+git -c http.sslVerify=false -c credential.helper= -c credential.interactive=false fetch --force origin +refs/heads/${params.BRANCH}:refs/remotes/origin/${params.BRANCH} || exit /b 1
+git checkout -f -B ${params.BRANCH} origin/${params.BRANCH} || exit /b 1
+git log -1 --oneline"""
+                }
+            }
+        }
+
+        stage('Localize') {
+            when { expression { return params.PLATFORM_SEARCH_PATH?.trim() } }
+            steps {
+                // Перенацелить дескриптор платформы на фактический путь установки 1С.
+                pwsh """
+                    \$f = 'tools/checks/platforms/${params.PLATFORM}.json'
+                    (Get-Content -Raw -Encoding utf8 \$f).Replace('C:\\\\Program Files\\\\1cv8', '${params.PLATFORM_SEARCH_PATH.replace("\\", "\\\\")}') | Set-Content -NoNewline -Encoding utf8 \$f
+                    Select-String -Path \$f -Pattern 'КаталогПоискаВерсииПлатформы'
+                """
+            }
+        }
+
+        stage('Packages')    { steps { bat 'chcp 65001 >nul & oscript .\\lib\\packages.os download' } }
+        stage('Templates')   { steps { bat 'chcp 65001 >nul & oscript .\\tools\\onescript\\ZipTemplates.os' } }
+        stage('Compile epf') { steps { bat 'chcp 65001 >nul & oscript .\\tools\\onescript\\Compile.os .\\' } }
+        stage('Clear cache') { steps { bat 'chcp 65001 >nul & oscript .\\tools\\onescript\\ClearCacheAppData.os' } }
+
+        stage('Clean base') {
+            // Свежая база: init.epf прошлого прогона «пачкает» базу админом → иначе Prepare падает.
+            steps { bat "if exist tools\\ServiceBases\\v83ServiceBase${params.PLATFORM.replace('.', '')} rmdir /s /q tools\\ServiceBases\\v83ServiceBase${params.PLATFORM.replace('.', '')}" }
+        }
+
+        stage('Prepare') {
+            steps { bat 'chcp 65001 >nul & call tools\\checks\\platform\\windows\\prepare.cmd' }
+        }
+
+        stage('Resolve') {
+            steps {
+                // check.os --out: собрать top-level VBParams без запуска (раннер зовём отдельной стадией).
+                // Фичи из параметра FEATURES → по одному флагу --feature на строку (с ./).
+                pwsh """
+                    \$featArgs = @()
+                    foreach (\$line in ('''${params.FEATURES}''' -split "`n")) {
+                        \$t = \$line.Trim()
+                        if (\$t) { \$featArgs += '--feature'; \$featArgs += \$t }
+                    }
+                    \$cmd = @('tools\\checks\\check.os', '--scenario', '${params.SCENARIO}', '--platform', '${params.PLATFORM}', '--flavor', '${params.FLAVOR}') + \$featArgs + @('--no-watcher', '--out', "\$env:WORKSPACE\\toplevel.json")
+                    Write-Host "check.os \$(\$cmd -join ' ')"
+                    & oscript @cmd
+                    exit \$LASTEXITCODE
+                """
+            }
+        }
+
+        stage('Test') {
+            // Раннер напрямую из CWD=tools/ — stdout виден в Jenkins, exit-код = статус прогона.
+            steps {
+                dir('tools') { bat 'chcp 65001 >nul & oscript .\\onescript\\run-behavior-check-session.os "%WORKSPACE%\\toplevel.json"' }
+            }
+        }
+    }
+
+    post {
+        always {
+            junit allowEmptyResults: true, testResults: 'tools/ServiceBases/junitreport/**/*.xml'
+            archiveArtifacts artifacts: 'tools/ServiceBases/allurereport/**, tools/ServiceBases/cucumber/**, tools/ServiceBases/junitreport/**, tools/ServiceBases/*.txt, tools/ServiceBases/*.log, toplevel.json, build_*.json', allowEmptyArchive: true
+        }
+    }
+}
